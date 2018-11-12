@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd    " >
+<mapper namespace="com.baizhi.dao.AlbumDAO">
+    <insert id="insertAlbumDAO" parameterType="com.baizhi.entity.Album">
+        insert into album
+        values(#{id},#{title},#{publishDate},#{count},#{coverImg},#{score},#{author},#{broadCast},#{brief})
+    </insert>
+    <select id="queryAlbumById" resultType="java.lang.String">
+        select * from album
+        where id=#{id}
+    </select>
+    <resultMap type="com.baizhi.entity.Album" id="chapMap">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="publishDate" column="publishDate"/>
+        <result property="count" column="count"/>
+        <result property="score" column="score"/>
+        <result property="coverImg" column="coverImg"/>
+        <result property="author" column="author"/>
+        <result property="broadCast" column="broadCast"/>
+        <result property="brief" column="brief"/>
+
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="id" column="cid"/>
+            <result property="title" column="ctitle"/>
+            <result property="size" column="size"/>
+            <result property="duration" column="duration"/>
+            <result property="downPath" column="downPath"/>
+            <result property="uploadDate" column="uploadDate" />
+            <result property="album_id" column="album_id" />
+        </collection>
+    </resultMap>
+    <select id="queryAllAlbum" resultMap="chapMap">
+        select a.id, a.title, publishDate ,count ,coverImg, score, author, broadCast, brief,
+        c.id cid,c.title ctitle, size, duration, downPath ,uploadDate,album_id
+        from album  a left join chapter c
+        on a.id=c.album_id
+    </select>
+
+
+    <delete id="deleteAlbumById" parameterType="java.lang.String">
+        delete from album
+        where id=#{id}
+    </delete>
+
+    <select id="queryAllName" resultType="com.baizhi.entity.Album">
+        select * from album
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd    " >
+<mapper namespace="com.baizhi.dao.UserDAO">
+
+    <select id="queryAllUser" resultType="com.baizhi.entity.User">
+        select * from user
+    </select>
+
+    <update id="updateUser" parameterType="com.baizhi.entity.User">
+        update user set phoneNum=#{phoneNum} ,username=#{username}, `password` =#{password},province=#{province}, city=#{city}, nickName=#{nickName} ,gender=#{gender}, sign=#{sign} ,headPic=#{headPic},`status`=#{status},onlineDate=#{onlineDate}
+        where   id=#{id}
+    </update>
+
+    <select id="queryUserById" resultType="com.baizhi.entity.User" >
+        select * from user
+        where id=#{id}
+    </select>
+</mapper>
